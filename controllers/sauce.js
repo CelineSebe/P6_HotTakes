@@ -1,3 +1,5 @@
+
+
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
 
@@ -6,6 +8,7 @@ exports.createSauce = (req, res, next) =>
 {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
+    // delete sauceObject.userId;
     const sauce = new Sauce
     ({
         ...sauceObject,
@@ -28,11 +31,11 @@ exports.createSauce = (req, res, next) =>
       (sauce) => 
       {
         res.status(200).json(sauce);
-      }
-    ).catch
-    ((error) => 
-      {
-        res.status(404).json({
+      })
+      .catch
+      ((error) => 
+      { res.status(404).json
+        ({
           error: error
         });
       });
@@ -46,13 +49,13 @@ exports.createSauce = (req, res, next) =>
  {
     const sauceObject = req.file ? 
     {
-        ...JSON.parse(req.body.sauce),
+       ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
   
     // delete sauceObject._userId;
     Sauce.findOne({_id: req.params.id})
-      .then ((sauce) => 
+      .then((sauce) => 
         {
           Sauce.updateOne({ _id: req.params.id}, { ...sauceObject, _id: req.params.id})
             .then(() => res.status(200).json({message : 'Objet modifié!'}))
@@ -86,7 +89,7 @@ exports.deleteSauce = (req, res, next) =>
       });
 };
 
-//Controller GET renvoi tous les articles
+//Controller GET renvoie tous les articles
 exports.getAllSauces = (req, res, next) => 
 {
   Sauce.find()
@@ -101,7 +104,7 @@ exports.getAllSauces = (req, res, next) =>
           error: error
       });
     });
-}
+};
   
   //Controller POST définit le statut like, propre à chaque userId.
   //Like= 0 par défaut et quand l'userId annule son like/dislike.
