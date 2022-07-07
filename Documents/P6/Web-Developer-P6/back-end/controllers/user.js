@@ -1,17 +1,29 @@
+
+//importation models de la BD User.js
 const User = require('../models/User');
+
+//importation de bcrypt pour hasher le mot de passe
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+//importation crypto-js: chiffrement de l'email
+// const cryptoJS = require("crypto-js");
+//importation des variables d'environnement
+// const dotenv = require("dotenv");
+// dotenv.config();
+
 exports.signup = (req, res, next) => {
+    // const email_cryptoJS = cryptoJS.HmacSHA256(req.body.email, `${process.env.cryptoJS_email}`).toString();
     bcrypt.hash(req.body.password, 10)
       .then(hash => {
         const user = new User({
           email: req.body.email,
           password: hash
         });
-        user.save()
-          .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-          .catch(error => res.status(400).json({ error }));
+        user
+            .save()
+            .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+            .catch(error => res.status(400).json({ error }));
       })
       .catch(error => res.status(500).json({ error }));
   };
@@ -34,7 +46,7 @@ exports.signup = (req, res, next) => {
                                 userId: user._id,
                                 token: jwt.sign(
                                     { userId: user.id },
-                                    'RANDOM_TOKEN_SECRET',
+                                    `${process.env.APP_SECRET}`,
                                     { expiresIn: '24H' }
                                 )
                             });

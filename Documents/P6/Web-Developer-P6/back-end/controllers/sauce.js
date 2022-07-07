@@ -89,12 +89,13 @@ exports.getAllSauces = (req, res, next) => {
   }
   
   exports.likeDislike = (req, res, next) => {
+  const sauceObject = { ...req.body};
     let like = req.body.like;
     let userId = req.body.userId;
     let sauceId = req.params.id;
     Sauce.findOne({ _id: sauceId })
           .then((sauce) => {
-                const valeursQuiChangent = {
+                const countUsers = {
                       usersLiked: sauce.usersLiked,
                       usersDisliked: sauce.usersDisliked,
                       likes: 0,
@@ -102,26 +103,26 @@ exports.getAllSauces = (req, res, next) => {
                 };
                 if (like == 1) {
                       if (!sauce.usersLiked.includes(userId) && !sauce.usersDisliked.includes(userId)) {
-                            valeursQuiChangent.usersLiked.push(userId);
+                            countUsers.usersLiked.push(userId);
                       }
                 } else if (like == -1) {
                       if (!sauce.usersLiked.includes(userId) && !sauce.usersDisliked.includes(userId)) {
-                            valeursQuiChangent.usersDisliked.push(userId);
+                            countUsers.usersDisliked.push(userId);
                       }
                 } else {
                       if (sauce.usersLiked.includes(userId)) {
-                            const index = valeursQuiChangent.usersLiked.indexOf(userId);
-                            valeursQuiChangent.usersLiked.splice(index, 1);
+                            const index = countUsers.usersLiked.indexOf(userId);
+                            countUsers.usersLiked.splice(index, 1);
                       } else if (sauce.usersDisliked.includes(userId)) {
-                            const index = valeursQuiChangent.usersDisliked.indexOf(userId);
-                            valeursQuiChangent.usersDisliked.splice(index, 1);
+                            const index = countUsers.usersDisliked.indexOf(userId);
+                            countUsers.usersDisliked.splice(index, 1);
                       }
                 }
 
-                valeursQuiChangent.likes = valeursQuiChangent.usersLiked.length;
-                valeursQuiChangent.dislikes = valeursQuiChangent.usersDisliked.length;
+                countUsers.likes = countUsers.usersLiked.length;
+                countUsers.dislikes = countUsers.usersDisliked.length;
 
-                Sauce.updateOne({ _id: sauceId }, valeursQuiChangent)
+                Sauce.updateOne({ _id: sauceId }, countUsers)
                       .then(() => res.status(201).json({ message: "Action sur le like ou dislike prise en compte !" }))
                       .catch((error) => res.status(400).json({ error }));
           })
