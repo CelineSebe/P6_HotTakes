@@ -2,17 +2,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-//utilisation de framework node "express"
-const app = express();
+//importer variable environnement
+const dotenv = require("dotenv");
+dotenv.config();
+//importer les routes
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 const path = require('path');
 
-//importer variable environnement
-const dotenv = require("dotenv");
-dotenv.config();
+//importer HELMET
+const helmet = require("helmet");
 
+//utilisation de framework node "express"
+const app = express();
 app.use(express.json());
+//utilisation helmet
+app.use(helmet());
+
+
 
 //connexion à la base de donnée du serveur
 mongoose.connect(`mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASSWORD}@${process.env.DB_USERNAME}.${process.env.DB_CLUSTER}.mongodb.net/?retryWrites=true&w=majority`,
@@ -34,9 +41,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASSWORD
 
 //Execution des routes
 app.use("/images", express.static(path.join(__dirname, 'images'))); 
-
 app.use("/api/sauces", sauceRoutes);
-
 app.use("/api/auth", userRoutes);
 
 //Exportation vers les autres fichiers
