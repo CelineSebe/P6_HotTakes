@@ -7,27 +7,27 @@ npm run start
 nodemon server
 
 # Routes
-## La route POST pour créer un compte
+## POST pour créer un compte
 http://localhost:3000/api/auth/signup
 
-## La route POST pour se loguer
+## POST pour se loguer
 http://localhost:3000/api/login
 
-## La route GET pour obtenir les articles
+## GET pour obtenir les articles
 http://localhost:3000/api/sauces
 
-## La route GET pour obtenir single sauce
+## GET pour obtenir single sauce
 http://localhost:3000/api/sauce/:id
 
-## La route POST pour créer un article
+## POST pour créer un article
 http://localhost:3000/api/sauces
 
-## La route PUT pour modifier un article
+## PUT pour modifier un article
 http://localhost:3000/api/sauces/:id
 
-# La route DELETE pour supprimer
+## DELETE pour supprimer
 http://localhost:3000/api/sauces/:id
 
-# La route POST pour aimer l'article
+## POST pour aimer l'article
 http://localhost:3000/api/sauces/:id/like
 

@@ -7,10 +7,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 //importation crypto-js: chiffrement de l'email
-// const cryptoJS = require("crypto-js");
+    // const cryptoJS = require("crypto-js");
 //importation des variables d'environnement
 // const dotenv = require("dotenv");
-// dotenv.config();
+    // dotenv.config();
 
 exports.signup = (req, res, next) => {
     // const email_cryptoJS = cryptoJS.HmacSHA256(req.body.email, `${process.env.cryptoJS_email}`).toString();
