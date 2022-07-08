@@ -1,4 +1,4 @@
-//importer le package HTTP de node.js pour créerserveur
+//importer package express et mongoose
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -11,10 +11,13 @@ const userRoutes = require('./routes/user');
 const path = require('path');
 
 //importer HELMET
+//Helmet aide à protéger de certaines vulnérabilités
+//en configurant de manière appropriée des en-têtes HTTP
 const helmet = require("helmet");
 
 //utilisation de framework node "express"
 const app = express();
+
 app.use(express.json());
 //utilisation helmet
 app.use(helmet());

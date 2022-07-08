@@ -1,5 +1,7 @@
+//Importer package multer
 const multer = require('multer');
 
+//format des fichiers images
 const MIME_TYPES = {
   'images/jpg': 'jpg',
   'images/jpeg': 'jpg',
